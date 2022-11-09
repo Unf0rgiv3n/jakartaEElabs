@@ -18,7 +18,7 @@ public class UserRepository implements Repository<User, String> {
     /**
      * Underlying data store. In future should be replaced with database connection.
      */
-    private DataStore store;
+    private final DataStore store;
 
     /**
      * @param store data store
@@ -45,7 +45,7 @@ public class UserRepository implements Repository<User, String> {
 
     @Override
     public void delete(User entity) {
-        throw new UnsupportedOperationException("Not implemented.");
+        store.deleteUser(entity);
     }
 
     @Override

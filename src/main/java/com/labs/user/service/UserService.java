@@ -1,5 +1,6 @@
 package com.labs.user.service;
 
+import com.labs.drink.repository.DrinkRepository;
 import lombok.NoArgsConstructor;
 import com.labs.user.entity.User;
 import com.labs.user.repository.UserRepository;
@@ -26,14 +27,17 @@ public class UserService {
      * Repository for user entity.
      */
     private UserRepository repository;
+    private DrinkRepository drinkRepository;
 
     /**
      * @param repository repository for character entity
      */
     @Inject
-    public UserService(UserRepository repository) {
+    public UserService(UserRepository repository, DrinkRepository drinkRepository) {
         this.repository = repository;
+        this.drinkRepository = drinkRepository;
     }
+
 
     /**
      * @param login existing username
@@ -65,6 +69,15 @@ public class UserService {
      */
     public void create(User user) {
         repository.create(user);
+    }
+
+    public void update(User user) {
+        repository.update(user);
+    }
+
+    public void delete(User user) {
+        user.getDrinks().forEach(drinkRepository::delete);
+        repository.delete(user);
     }
 
     public void deleteAvatar(User user) {

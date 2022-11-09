@@ -198,4 +198,15 @@ public class DataStore {
                 () -> users.add(CloningUtility.clone(user)));
     }
 
+    public synchronized void deleteUser(User user) {
+        findUser(user.getLogin()).ifPresentOrElse(
+                og -> {
+                    users.remove(og);
+                },
+                () -> {
+                    throw new IllegalArgumentException(
+                            String.format("The user with id \"%d\" does not exist", user.getLogin()));
+                });
+    }
+
 }

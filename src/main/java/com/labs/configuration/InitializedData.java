@@ -19,6 +19,7 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  * Listener started automatically on servlet context initialized. Fetches instance of the datasource from the servlet
@@ -38,13 +39,15 @@ public class InitializedData {
 //        KindService kindService = (KindService) sce.getServletContext().getAttribute("kindService");
 //        init(userService, drinkService, kindService);
 //    }
-    private UserService userService;
-    private DrinkService drinkService;
-    private KindService kindService;
+    private final UserService userService;
+    private final DrinkService drinkService;
+    private final KindService kindService;
 
     @Inject
-    public InitializedData(UserService userService) {
+    public InitializedData(UserService userService, DrinkService drinkService, KindService kindService) {
         this.userService = userService;
+        this.drinkService = drinkService;
+        this.kindService = kindService;
     }
 
     public void contextInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) {
@@ -61,6 +64,7 @@ public class InitializedData {
                 .password(Sha256Utility.hash("adminadmin"))
                 .isHaveAvatar(true)
                 .avatar(getResourceAsByteArray("avatars/wyborowa.png"))
+                .drinks(new ArrayList<>())
                 .build();
 
         User jake = User.builder()
@@ -72,6 +76,7 @@ public class InitializedData {
                 .password(Sha256Utility.hash("useruser"))
                 .isHaveAvatar(true)
                 .avatar(getResourceAsByteArray("avatars/jager.png"))
+                .drinks(new ArrayList<>())
                 .build();
 
         User kevin = User.builder()
@@ -82,6 +87,7 @@ public class InitializedData {
                 .email("kevin@example.com")
                 .password(Sha256Utility.hash("useruser"))
                 .isHaveAvatar(false)
+                .drinks(new ArrayList<>())
                 .build();
 
         User alice = User.builder()
@@ -93,6 +99,47 @@ public class InitializedData {
                 .password(Sha256Utility.hash("useruser"))
                 .isHaveAvatar(true)
                 .avatar(getResourceAsByteArray("avatars/jack.png"))
+                .drinks(new ArrayList<>())
+                .build();
+
+        Kind kind1 = Kind.builder()
+                .name("KIND-1")
+                .concentration(40)
+                .build();
+
+        Kind kind2 = Kind.builder()
+                .name("KIND-2")
+                .concentration(69)
+                .build();
+
+        Drink drink1 = Drink.builder()
+                .id(1L)
+                .consumed(LocalDate.of(2022, 11,11))
+                .name("genericpiwo1")
+                .description("genericopis_1")
+                .kind(kind1)
+                .price(21)
+                .user(admin)
+                .build();
+
+        Drink drink2 = Drink.builder()
+                .id(2L)
+                .consumed(LocalDate.of(2022, 11,9))
+                .name("genericDRINK2")
+                .description("genericOPIS_2")
+                .kind(kind2)
+                .price(33)
+                .user(alice)
+                .build();
+
+        Drink drink3 = Drink.builder()
+                .id(3L)
+                .consumed(LocalDate.of(2022, 11,5))
+                .name("generi3")
+                .description("gener3")
+                .kind(kind1)
+                .price(10)
+                .user(jake)
                 .build();
 
         userService.create(admin);
@@ -104,6 +151,13 @@ public class InitializedData {
         userService.saveAvatar(kevin);
         userService.saveAvatar(alice);
         userService.saveAvatar(jake);
+
+        kindService.create(kind1);
+        kindService.create(kind2);
+
+        drinkService.create(drink1);
+        drinkService.create(drink2);
+        drinkService.create(drink3);
     }
 
     /**

@@ -3,7 +3,11 @@ package com.labs.drink.service;
 import com.labs.drink.entity.Drink;
 import com.labs.drink.repository.DrinkRepository;
 import com.labs.user.entity.User;
+import com.labs.user.repository.UserRepository;
+import lombok.NoArgsConstructor;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -12,18 +16,23 @@ import java.util.Optional;
 /**
  * Service layer for all business actions regarding character entity.
  */
+@ApplicationScoped
+@NoArgsConstructor
 public class DrinkService {
 
     /**
      * Repository for character entity.
      */
     private DrinkRepository repository;
+    private UserRepository userRepository;
 
     /**
      * @param repository repository for character entity
      */
-    public DrinkService(DrinkRepository repository) {
+    @Inject
+    public DrinkService(DrinkRepository repository, UserRepository userRepository) {
         this.repository = repository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -34,6 +43,7 @@ public class DrinkService {
      */
     public Optional<Drink> find(Long id) {
         return repository.find(id);
+
     }
 
     /**
@@ -67,6 +77,9 @@ public class DrinkService {
      */
     public void create(Drink drink) {
         repository.create(drink);
+        User user = drink.getUser();
+        user.addDrink(drink);
+        userRepository.update(user);
     }
 
     /**

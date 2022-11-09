@@ -6,6 +6,8 @@ import com.labs.repository.Repository;
 import com.labs.serialization.CloningUtility;
 import com.labs.user.entity.User;
 
+import javax.enterprise.context.Dependent;
+import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -13,6 +15,7 @@ import java.util.stream.Collectors;
 /**
  * Repository for character entity. Repositories should be used in business layer (e.g.: in services).
  */
+@Dependent
 public class DrinkRepository implements Repository<Drink, Long> {
 
     /**
@@ -23,6 +26,7 @@ public class DrinkRepository implements Repository<Drink, Long> {
     /**
      * @param store data store
      */
+    @Inject
     public DrinkRepository(DataStore store) {
         this.store = store;
     }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/WEB-INF/template/main.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="login" value="#{userView.login}" required="true"/>
+        <f:viewAction action="#{userView.init()}"/>
+    </f:metadata>
+
+    <ui:define name="content">
+        <h:panelGroup layout="block">
+            <article>
+                <header><h2><h:outputText value="#{userView.login}"/></h2></header>
+                <div>
+                    <div>
+                        BirthDate: <h:outputText value="#{userView.user.birthDate}"/>
+                    </div>
+                    <div>
+                        Name: <h:outputText value="#{userView.user.name}"/>
+                    </div>
+                    <div>
+                        Surname: <h:outputText value="#{userView.user.surname}"/>
+                    </div>
+
+                    <h:dataTable value="#{userView.drinks}" var="drink" styleClass="data-table">
+                        <h:column>
+                            <f:facet name="header">Name</f:facet>
+                            <h:outputText value="#{drink.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">view</f:facet>
+                            <h:link outcome="/drink/drink_view.xhtml" value="view">
+                                <f:param name="id" value="#{drink.id}"/>
+                            </h:link>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">edit</f:facet>
+                            <h:link outcome="/drink/drink_edit.xhtml" value="edit">
+                                <f:param name="id" value="#{drink.id}"/>
+                            </h:link>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">delete</f:facet>
+                            <h:form>
+                                <h:commandButton styleClass="ui-button ui-control" value="delete"
+                                                 action="#{userView.deleteAction(drink)}"/>
+                            </h:form>
+                        </h:column>
+                    </h:dataTable>
+                    <h:link styleClass="ui-button ui-control" outcome="/drink/drink_create.xhtml" value="Create!">
+                        <f:param name="login" value="#{userView.user.login}"/>
+                    </h:link>
+                </div>
+            </article>
+        </h:panelGroup>
+    </ui:define>
+
+</ui:composition>

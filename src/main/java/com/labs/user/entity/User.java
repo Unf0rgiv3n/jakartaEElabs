@@ -30,4 +30,11 @@ public class User implements Serializable {
     private boolean isHaveAvatar;
     private byte[] avatar;
 
+    public void addDrink(Drink drink) {
+        drinks.add(drink);
+    }
+
+    public void deleteDrink(Drink drink) {
+        drinks.remove(drink);
+    }
 }

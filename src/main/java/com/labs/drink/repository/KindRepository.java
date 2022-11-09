@@ -4,12 +4,15 @@ import com.labs.datastore.DataStore;
 import com.labs.drink.entity.Kind;
 import com.labs.repository.Repository;
 
+import javax.enterprise.context.Dependent;
+import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 
 /**
  * Repository for profession entity. Repositories should be used in business layer (e.g.: in services).
  */
+@Dependent
 public class KindRepository implements Repository<Kind, String> {
 
     /**
@@ -20,6 +23,7 @@ public class KindRepository implements Repository<Kind, String> {
     /**
      * @param store data store
      */
+    @Inject
     public KindRepository(DataStore store) {
         this.store = store;
     }

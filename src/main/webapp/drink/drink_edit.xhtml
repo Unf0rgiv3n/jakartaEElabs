@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/WEB-INF/template/main.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{drinkEdit.id}" required="true"/>
+        <f:viewAction action="#{drinkEdit.init()}"/>
+    </f:metadata>
+
+    <ui:define name="content">
+        <h:panelGroup layout="block">
+            <article>
+                <h:form class="main-form">
+                    <h:outputLabel for="id" value="Id:"/>
+                    <h:inputText class="ui-control ui-input" id="id" value="#{drinkEdit.drinkEditModel.id}"/>
+
+                    <h:outputLabel for="name" value="name:"/>
+                    <h:inputText class="ui-control ui-input" id="name" value="#{drinkEdit.drinkEditModel.name}"/>
+
+                    <h:outputLabel for="kindName" value="kindname:"/>
+                    <h:inputText class="ui-control ui-input" id="kindName" value="#{drinkEdit.drinkEditModel.kindName}"/>
+
+                    <h:outputLabel for="description" value="description:"/>
+                    <h:inputText class="ui-control ui-input" id="description" value="#{drinkEdit.drinkEditModel.description}"/>
+
+                    <h:outputLabel for="price" value="price:"/>
+                    <h:inputText class="ui-control ui-input" id="price" value="#{drinkEdit.drinkEditModel.price}"/>
+
+                    <h:outputLabel for="login" value="login:"/>
+                    <h:inputText class="ui-control ui-input" id="login" value="#{drinkEdit.drinkEditModel.login}"/>
+
+                    <h:commandButton class="ui-control ui-button" value="Update" action="#{drinkEdit.updateAction()}"/>
+                </h:form>
+            </article>
+        </h:panelGroup>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/WEB-INF/template/main.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="login" value="#{drinkCreate.login}" required="true"/>
+        <f:viewAction action="#{drinkCreate.init()}"/>
+    </f:metadata>
+
+    <ui:define name="content">
+        <h:panelGroup layout="block">
+            <header><h2><h:outputText value="#{drinkCreate.login}"/></h2></header>
+            <article>
+                <h:form class="main-form">
+                    <h:outputLabel for="id" value="Id:"/>
+                    <h:inputText class="ui-control ui-input" id="id" value="#{drinkCreate.drinkCreateModel.id}"/>
+
+                    <h:outputLabel for="name" value="name:"/>
+                    <h:inputText class="ui-control ui-input" id="name" value="#{drinkCreate.drinkCreateModel.name}"/>
+
+                    <h:outputLabel for="kindname" value="kindname:"/>
+                    <h:inputText class="ui-control ui-input" id="kindname" value="#{drinkCreate.drinkCreateModel.kindName}"/>
+
+                    <h:outputLabel for="description" value="description:"/>
+                    <h:inputText class="ui-control ui-input" id="description" value="#{drinkCreate.drinkCreateModel.description}"/>
+
+                    <h:outputLabel for="price" value="price:"/>
+                    <h:inputText class="ui-control ui-input" id="price" value="#{drinkCreate.drinkCreateModel.price}"/>
+
+                    <h:commandButton class="ui-control ui-button" value="Create" action="#{drinkCreate.saveAction()}"/>
+                </h:form>
+            </article>
+        </h:panelGroup>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/WEB-INF/template/main.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{drinkView.id}" required="true"/>
+        <f:viewAction action="#{drinkView.init()}"/>
+    </f:metadata>
+
+    <ui:define name="content">
+        <h:panelGroup layout="block">
+            <article>
+                <div>
+                    <div>
+                        Name: <h:outputText value="#{drinkView.drink.name}"/>
+                    </div>
+                    <div>
+                        Description: <h:outputText value="#{drinkView.drink.description}"/>
+                    </div>
+                    <div>
+                        Price: <h:outputText value="#{drinkView.drink.price}"/>
+                    </div>
+                    <div>
+                        Kind: <h:outputText value="#{drinkView.drink.kind.name}"/>
+                    </div>
+                    <div>
+                        User: <h:outputText value="#{drinkView.drink.user.name}"/>
+                    </div>
+                </div>
+            </article>
+        </h:panelGroup>
+    </ui:define>
+
+</ui:composition>
