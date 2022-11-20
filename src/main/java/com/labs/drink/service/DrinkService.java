@@ -1,7 +1,9 @@
 package com.labs.drink.service;
 
 import com.labs.drink.entity.Drink;
+import com.labs.drink.entity.Kind;
 import com.labs.drink.repository.DrinkRepository;
+import com.labs.drink.repository.KindRepository;
 import com.labs.user.entity.User;
 import com.labs.user.repository.UserRepository;
 import lombok.NoArgsConstructor;
@@ -23,6 +25,7 @@ public class DrinkService {
     /**
      * Repository for character entity.
      */
+    private KindRepository kindRepository;
     private DrinkRepository repository;
     private UserRepository userRepository;
 
@@ -30,9 +33,10 @@ public class DrinkService {
      * @param repository repository for character entity
      */
     @Inject
-    public DrinkService(DrinkRepository repository, UserRepository userRepository) {
+    public DrinkService(DrinkRepository repository, UserRepository userRepository, KindRepository kindRepository) {
         this.repository = repository;
         this.userRepository = userRepository;
+        this.kindRepository = kindRepository;
     }
 
     /**
@@ -70,6 +74,14 @@ public class DrinkService {
         return repository.findAllByUser(user);
     }
 
+    public Optional<List<Drink>> findByKind(String kindName) {
+        Optional<Kind> kind = kindRepository.find(kindName);
+        if (kind.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(repository.findAllByKind(kind.get()));
+    }
+
     /**
      * Creates new character.
      *
@@ -80,6 +92,10 @@ public class DrinkService {
         User user = drink.getUser();
         user.addDrink(drink);
         userRepository.update(user);
+    }
+
+    public void create2(Drink drink) {
+        repository.create(drink);
     }
 
     /**

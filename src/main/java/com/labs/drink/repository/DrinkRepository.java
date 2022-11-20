@@ -2,6 +2,7 @@ package com.labs.drink.repository;
 
 import com.labs.datastore.DataStore;
 import com.labs.drink.entity.Drink;
+import com.labs.drink.entity.Kind;
 import com.labs.repository.Repository;
 import com.labs.serialization.CloningUtility;
 import com.labs.user.entity.User;
@@ -80,6 +81,13 @@ public class DrinkRepository implements Repository<Drink, Long> {
     public List<Drink> findAllByUser(User user) {
         return store.findAllDrinks().stream()
                 .filter(drink -> drink.getUser().equals(user))
+                .map(CloningUtility::clone)
+                .collect(Collectors.toList());
+    }
+
+    public List<Drink> findAllByKind(Kind kind) {
+        return store.findAllDrinks().stream()
+                .filter(drink -> drink.getKind().equals(kind))
                 .map(CloningUtility::clone)
                 .collect(Collectors.toList());
     }

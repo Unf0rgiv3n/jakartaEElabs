@@ -1,11 +1,14 @@
 package com.labs.drink.service;
 
+import com.labs.drink.entity.Drink;
 import com.labs.drink.entity.Kind;
+import com.labs.drink.repository.DrinkRepository;
 import com.labs.drink.repository.KindRepository;
 import lombok.NoArgsConstructor;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -19,13 +22,16 @@ public class KindService {
      * Repository for profession entity.
      */
     private KindRepository repository;
+    private DrinkRepository drinkRepository;
 
     /**
      * @param repository repository for profession entity
      */
     @Inject
-    public KindService(KindRepository repository) {
+    public KindService(KindRepository repository, DrinkRepository drinkRepository)
+    {
         this.repository = repository;
+        this.drinkRepository = drinkRepository;
     }
 
     /**
@@ -36,6 +42,10 @@ public class KindService {
         return repository.find(name);
     }
 
+    public List<Kind> findAll() {
+        return repository.findAll();
+    }
+
     /**
      * Stores new profession in the data store.
      *
@@ -44,6 +54,12 @@ public class KindService {
         repository.create(kind);
     }
 
-    public void delete(Kind kind) { repository.delete(kind);}
+    public void update(Kind kind) {repository.update(kind);}
+
+    public void delete(Kind kind) {
+        List<Drink> drinks = drinkRepository.findAllByKind(kind);
+        drinks.forEach(drinkRepository::delete);
+        repository.delete(kind);
+    }
 }
 

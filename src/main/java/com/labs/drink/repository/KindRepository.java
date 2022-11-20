@@ -46,12 +46,12 @@ public class KindRepository implements Repository<Kind, String> {
 
     @Override
     public void delete(Kind entity) {
-        throw new UnsupportedOperationException("Operation not implemented.");
+        store.deleteKind(entity);
     }
 
     @Override
     public void update(Kind entity) {
-        throw new UnsupportedOperationException("Operation not implemented.");
+        store.updateKind(entity);
     }
 
 }

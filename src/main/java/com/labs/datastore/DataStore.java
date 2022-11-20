@@ -77,6 +77,30 @@ public class DataStore {
                 () -> kinds.add(CloningUtility.clone(kind)));
     }
 
+    public synchronized void updateKind(Kind kind) throws IllegalArgumentException {
+        findKind(kind.getName()).ifPresentOrElse(
+                original -> {
+                    kinds.remove(original);
+                    kinds.add(CloningUtility.clone(kind));
+                },
+                ()->{throw new IllegalArgumentException(
+                        String.format("The kind with name \"%s\" does not exist",  kind.getName()));
+                }
+        );
+    }
+
+    public synchronized void deleteKind(Kind kind) throws  IllegalArgumentException {
+        findKind(kind.getName()).ifPresentOrElse(
+                original -> {
+                    kinds.remove(original);
+                },
+                () -> {
+                    throw new IllegalArgumentException(
+                            String.format("The kind with name \"%s\" does not exist", kind.getName()));
+                }
+        );
+    }
+
     /**
      * Seeks for all drinks.
      *

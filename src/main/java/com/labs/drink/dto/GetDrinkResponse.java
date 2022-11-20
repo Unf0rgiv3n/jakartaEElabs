@@ -27,7 +27,6 @@ public class GetDrinkResponse {
                 .name(drink.getName())
                 .description(drink.getDescription())
                 .price(drink.getPrice())
-                .kind(drink.getKind().getName())
                 .consumed(drink.getConsumed())
                 .build();
     }
